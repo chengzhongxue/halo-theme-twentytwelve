@@ -9,13 +9,13 @@ spec:
     website: "https://github.com/chengzhongxue"
   description: 双栏文字主题
   logo: "/themes/theme-twentytwelve/assets/image/twentytwelve-logo.png"
-  homepage: "https://github.com/chengzhongxue/theme-twentytwelve#readme"
-  repo: "https://github.com/chengzhongxue/theme-twentytwelve"
-  issues: "https://github.com/chengzhongxue/theme-twentytwelve/issues"
+  homepage: "https://github.com/chengzhongxue/halo-theme-twentytwelve#readme"
+  repo: "https://github.com/chengzhongxue/halo-theme-twentytwelve"
+  issues: "https://github.com/chengzhongxue/halo-theme-twentytwelve/issues"
   settingName: "theme-twentytwelve-setting"
   configMapName: "theme-twentytwelve-configMap"
   version: "1.0.0"
   requires: ">=2.15.0"
   license:
     - name: "GPL-2.0 license"
-      url: "https://github.com/chengzhongxue/theme-twentytwelve?tab=GPL-2.0-1-ov-file#readme"
+      url: "https://github.com/chengzhongxue/halo-theme-twentytwelve?tab=GPL-2.0-1-ov-file#readme"
