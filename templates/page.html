@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{layout :: html(head = null,content = ~{::content})}"
->
-  <th:block th:fragment="content">
-    <h1 th:text="${singlePage.spec.title}"></h1>
-    <article th:utext="${singlePage.content.content}"></article>
-  </th:block>
+<html xmlns:th="https://www.thymeleaf.org"
+    th:replace="~{modules/layout :: layout(_content = ~{::content},_title = ${singlePage.spec.title})}">
+<th:block th:fragment="content">
+    <div id="primary" class="site-content">
+        <div class="breadcrumb">
+            <ul id="breadcrumb" class="breadcrumb">
+                <li class="item"><a href="/">⚐ Home</a></li>
+                <li class="seperator"> / </li>
+                <li class="item-current item" th:text="${singlePage.spec.title}"></li>
+            </ul>
+        </div>
+        <div id="content" role="main">
+            <article class="page type-page">
+                <header class="entry-header">
+                    <h1 class="entry-title" th:text="${singlePage.spec.title}"></h1>
+                </header>
+                <div class="entry-content">
+                    <th:block th:utext="${singlePage.content.content}"></th:block>
+                </div>
+                <footer class="entry-meta-single">
+                    <span class="views">
+                        浏览:&nbsp;[[${singlePage.stats.visit}]] </span>
+                </footer>
+            </article>
+            <div id="comments" class="comments-area">
+                <h2 class="comments-title">
+                    <span>《[[${singlePage.spec.title}]]》留言数：[[${singlePage.stats.comment}]]</span>
+                </h2>
+                <th:block th:replace="~{modules/widgets/halo-comment :: halo-comment(name=${singlePage.metadata.name},kind='SinglePage',group='content.halo.run')}"></th:block>
+            </div>
+            
+        </div>
+    </div>
+    <th:block th:replace="~{modules/sidebar :: sidebar (${theme.config.sidebar.pageWidget})}"></th:block>
+</th:block>
+
 </html>

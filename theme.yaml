@@ -1,21 +1,21 @@
 apiVersion: theme.halo.run/v1alpha1
 kind: Theme
 metadata:
-  name: theme-starter
+  name: theme-twentytwelve
 spec:
-  displayName: Theme Starter
+  displayName: Twenty Twelve
   author:
-    name: Halo
-    website: "https://github.com/halo-dev"
-  description: Halo 2.0 Theme base on Thymeleaf
-  logo: "https://www.halo.run/logo"
-  homepage: "https://github.com/halo-dev/theme-starter#readme"
-  repo: "https://github.com/halo-dev/theme-starter"
-  issues: "https://github.com/halo-dev/theme-starter/issues"
-  settingName: "theme-starter-setting"
-  configMapName: "theme-starter-configMap"
+    name: 困困鱼
+    website: "https://github.com/chengzhongxue"
+  description: 双栏文字主题
+  logo: "/themes/theme-twentytwelve/assets/image/twentytwelve-logo.png"
+  homepage: "https://github.com/chengzhongxue/theme-twentytwelve#readme"
+  repo: "https://github.com/chengzhongxue/theme-twentytwelve"
+  issues: "https://github.com/chengzhongxue/theme-twentytwelve/issues"
+  settingName: "theme-twentytwelve-setting"
+  configMapName: "theme-twentytwelve-configMap"
   version: "1.0.0"
-  requires: ">=2.0.0"
+  requires: ">=2.15.0"
   license:
-    - name: "GPL-3.0"
-      url: "https://github.com/halo-dev/plugin-starter/blob/main/LICENSE"
+    - name: "GPL-2.0 license"
+      url: "https://github.com/chengzhongxue/theme-twentytwelve?tab=GPL-2.0-1-ov-file#readme"

@@ -1,10 +1,152 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{layout :: html(head = null,content = ~{::content})}"
->
-  <th:block th:fragment="content">
-    <h1 th:text="${post.spec.title}"></h1>
-    <article th:utext="${post.content.content}"></article>
-  </th:block>
+<html xmlns:th="https://www.thymeleaf.org"
+    th:replace="~{modules/layout :: layout(_content = ~{::content},_title = ${post.spec.title})}">
+<th:block th:fragment="content">
+    <div id="primary" class="site-content">
+        <div class="breadcrumb">
+            <ul id="breadcrumb" class="breadcrumb">
+                <li class="item"><a href="/">⚐ Home</a></li>
+                <th:block th:if="${not #lists.isEmpty(post.categories)}">
+                    <li class="seperator"> / </li>
+                    <li th:with="category = ${post.categories[0]}" class="item item-cat"><a
+                            th:href="@{${category.status.permalink}}" th:text="${category.spec.displayName}"></a></li>
+                </th:block>
+                <li class="seperator"> / </li>
+                <li class="item item-current" th:text="${post.spec.title}"></li>
+            </ul>
+        </div>
+        <div id="content" role="main">
+            <article itemscope itemtype="http://schema.org/Article">
+                <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+                    <meta itemprop="name" th:content="${site.title}">
+                    <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+                        <meta itemprop="url" th:content="${site.logo}">
+                        <meta itemprop="width" content="112px">
+                        <meta itemprop="height" content="112px">
+                    </div>
+                </div>
+                <meta itemprop="mainEntityOfPage" th:content="@{${post.status.permalink}}">
+                <meta itemprop="dateModified" th:content="${post.spec.publishTime.toEpochMilli()}">
+                <header class="entry-header">
+                    <h1 class="entry-title" th:text="${post.spec.title}"></h1>
+                    <p class="meta"><!--文章页标题下标签-->
+                        Auth:[[${post.owner.displayName}]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Date:[[${#dates.format(post.spec.publishTime,'yyyy/MM/dd')}]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <th:block th:if="${not #lists.isEmpty(post.categories)}">
+                            Cat:<a th:with="category = ${post.categories[0]}" th:href="@{${category.status.permalink}}"
+                                rel="category tag"
+                                th:text="${category.spec.displayName}"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </th:block>
+                        <span class="word-count"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Views:[[${post.stats.visit}]]
+                    </p>
+                    <div class="single-meta-info gray">
+                        <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                            <meta itemprop="url" th:content="${post.owner.permalink}">
+                        </span>
+                        <span class="comment anchor-fix">
+                            <a th:href="${post.status.permalink}+'#comments'" rel="nofollow">
+                                <meta itemprop="interactionCount" th:content="'UserComments:'+${post.stats.comment}">
+                                [[${post.stats.comment}]]条评论
+                            </a></span>
+                    </div>
+                </header>
+                <div class="entry-content">
+                    <div id="log-box" style="display: none;">
+                        <div id="catalog"></div>
+                    </div>
+                    <p class="article_info_head" th:if="${not #strings.isEmpty(theme.config.basic.article_info_head)}"
+                        th:utext="${theme.config.basic.article_info_head}"></p>
+                    <th:block th:utext="${post.content.content}"></th:block>
+                </div>
+                <div class="clear"></div>
+                <div class="article_info_foot" th:if="${not #strings.isEmpty(theme.config.basic.article_info_foot)}"
+                    th:utext="${theme.config.basic.article_info_foot}"></div>
+                <div class="clear"></div>
+                <footer class="content-foot" th:if="${not #lists.isEmpty(post.tags)}">
+                    ⚑Tags：<th:block th:each="tag,iter : ${post.tags}">
+                        <a th:href="@{${tag.status.permalink}}" target="_blank" rel="tag"
+                            th:text="${tag.spec.displayName}"></a>
+                        <th:block th:if="${iter.index>0 && iter.count<post.tags.size}">、</th:block>
+                    </th:block>
+                </footer>
+                <div class="author-info">
+                    <div class="author-description">
+                        <p>文章作者：<a class="author-link" th:href="@{${post.owner.permalink}}" title="查看作者所有文章"
+                                rel="author" th:text="${post.owner.displayName}"></a></p>
+                        <p>本文链接：<a th:href="${post.status.permalink}" target="_blank"
+                                rel="bookmark">[[${site.url+post.status.permalink}]]</a></p>
+                        <p>版权声明：本站禁止任何形式的文章转载。</p>
+                    </div>
+                </div>
+            </article>
+            <nav class="nav-single" th:with="postCursor = ${postFinder.cursor(post.metadata.name)}">
+                <h3 class="assistive-text">Post navigation</h3>
+                <span class="nav-previous">
+                    <a th:if="${postCursor.hasPrevious()}" th:href="@{${postCursor.previous.status.permalink}}"
+                        rel="prev"><span class="meta-nav">←</span> [[${postCursor.previous.spec.title}]]</a></span>
+                <span class="nav-next">
+                    <a th:if="${postCursor.hasNext()}" th:href="@{${postCursor.next.status.permalink}}"
+                        rel="next">[[${postCursor.next.spec.title}]] <span class="meta-nav">→</span></a></span>
+            </nav>
+            <div id="comments" class="comments-area">
+                <h2 class="comments-title">
+                    <span>《[[${post.spec.title}]]》留言数：[[${post.stats.comment}]]</span>
+                </h2>
+                <th:block
+                    th:replace="~{modules/widgets/halo-comment :: halo-comment(name=${post.metadata.name},kind='Post',group='content.halo.run')}">
+                </th:block>
+            </div>
+
+        </div>
+    </div>
+    <th:block th:replace="~{modules/sidebar :: sidebar (${theme.config.sidebar.postWidget})}"></th:block>
+    <script>
+        const contentElement = document.querySelector(".entry-content")
+        const PatternString = {
+            cjk: "\\p{Script=Han}|\\p{Script=Kana}|\\p{Script=Hira}|\\p{Script=Hangul}",
+            word: "[\\p{L}|\\p{N}|._]+",
+        };
+        const wordPattern = new RegExp(`${PatternString.cjk}|${PatternString.word}`, "gu");
+        const postWordCount = getWordCount(contentElement);
+        var wordsCount = document.querySelector(".word-count")
+        if (postWordCount > 0) {
+            wordsCount.textContent = 'Word:共'+ postWordCount + '字';
+        } else {
+            wordsCount?.remove();
+        }
+        function getWordCount(document) {
+            return document.textContent?.normalize().match(wordPattern)?.length ?? 0;
+        }
+    </script>
+    <script th:src="@{/assets/libs/tocbot/tocbot.min.js}"></script>
+    <script>
+        function tocFn() {
+            const articleContent = document.querySelector('.entry-content')
+            if (!articleContent) {
+                return;
+            }
+            const tocContainer = document.querySelector("#catalog");
+            const titles = articleContent?.querySelectorAll("h1, h2, h3, h4, h5, h6");
+            if (!titles || titles.length === 0) {
+                tocContainer?.remove();
+                return;
+            }
+            tocbot.init({
+                tocSelector: '#catalog',
+                contentSelector: '.entry-content',
+                headingSelector: 'h1, h2, h3, h4, h5, h6',
+                listItemClass: 'catalog',
+                activeLinkClass: 'active-class',
+                activeListItemClass: 'active-class',
+                hasInnerContainers: true,
+            });
+            const p = document.createElement('p');
+            tocContainer.insertBefore(p, tocContainer.firstChild);
+            p.innerHTML = '<span class="log-zd"><span class="log-close"><a title="隐藏目录"><strong>文章目录</strong></a></span></span>'
+        }
+        tocFn();
+    </script>
+</th:block>
+
 </html>

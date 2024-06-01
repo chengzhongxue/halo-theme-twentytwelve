@@ -1,0 +1,43 @@
+<aside id="efanwebsitestat-2" class="widget widget_Websitestat">
+    <h3 class="widget-title">网站统计</h3>
+    <div class="widgest-boys">
+        <ul th:with="stats = ${siteStatsFinder.getStats()}">
+            <div class="widgest-bg widgest-bg1 wb-top">
+                <div class="widgest-main">
+                    <div class="widgest-meat">
+                        <li><i class="fa fa-snowflake-o" aria-hidden="true"></i> 文章总数：[[${stats.post}]] 篇</li>
+                    </div>
+                </div>
+            </div>
+            <div class="widgest-bg widgest-bg2">
+                <div class="widgest-main">
+                    <div class="widgest-meat">
+                        <li><i class="fa fa-paper-plane-o" aria-hidden="true"></i> 评论数目：[[${stats.comment}]] 条</li>
+                    </div>
+                </div>
+            </div>
+            <div class="widgest-bg widgest-bg3">
+                <div class="widgest-main">
+                    <div class="widgest-meat">
+                        <li><i class="fa fa-star-o" aria-hidden="true"></i> 分类总数：[[${stats.category}]] 个</li>
+                    </div>
+                </div>
+            </div>
+            <div class="widgest-bg widgest-bg4">
+                <div class="widgest-main">
+                    <div class="widgest-meat">
+                        <li><i class="fa fa-pie-chart" aria-hidden="true"></i> 浏览次数：[[${stats.visit}]] 次</li>
+                    </div>
+                </div>
+            </div>
+            <div class="widgest-bg widgest-bg8">
+                <div class="widgest-main">
+                    <div class="widgest-meat">
+                        <li><i class="fa fa-calendar" aria-hidden="true"></i> 建站时间：[[${theme.config.basic.site_start_time}]]</li>
+                    </div>
+                </div>
+            </div>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</aside>

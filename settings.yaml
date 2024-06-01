@@ -1,13 +1,324 @@
 apiVersion: v1alpha1
 kind: Setting
 metadata:
-  name: theme-starter-setting
+  name: theme-twentytwelve-setting
 spec:
   forms:
-    - group: style
-      label: 样式
+    - group: basic
+      label: 基础设置
       formSchema:
-        - $formkit: color
-          name: background_color
-          label: 背景颜色
-          value: "#f2f2f2"
+        - $formkit: checkbox
+          name: darkmode
+          id: darkmode
+          label: 开启夜间模式
+          value: true
+          help: 开启、关闭夜间模式
+        - $formkit: number
+          if: $get(darkmode).value
+          name: darkmode_time_start
+          label: 夜间模式开始时间
+          min: 0
+          max: 24
+          value: 21
+        - $formkit: number
+          if: $get(darkmode).value
+          name: darkmode_time_end
+          label: 夜间模式结束时间
+          min: 0
+          max: 24
+          value: 6
+        - $formkit: date
+          name: site_start_time
+          label: 建站时间
+          value: "1911-11-11"
+          help: 填格式 1972-11-11
+        - $formkit: number
+          name: copyright
+          label: 版权号
+          value: 2024
+          help: 填写年份（数字）即可
+        - $formkit: code
+          name: footerinfo_first
+          label: 页脚第一行信息
+          height: 200px
+          language: html
+          help: 显示在第一行结尾，支持 html
+        - $formkit: code
+          name: footerinfo
+          label: 页脚第二行信息
+          height: 200px
+          language: html
+          help: 显示页脚第二行（第一行下面），支持 html
+        - $formkit: code
+          name: article_info_head
+          label: 文章开始信息
+          height: 200px
+          language: html
+          help: 文章第一段插入指定内容，支持 html
+        - $formkit: code
+          name: article_info_foot
+          label: 文章末尾信息
+          height: 200px
+          language: html
+          help: 文章最后插入指定内容，支持 html
+
+    - group: sidebar
+      label: 侧栏
+      formSchema:
+        - $formkit: repeater
+          name: indexWidget
+          id: indexWidget
+          label: 首页
+          value: 
+            - widget: "profile"
+            - widget: "comments"
+            - widget: "tags"
+            - widget: "websitestat"
+          children:
+            - $formkit: select
+              name: widget
+              id: widget
+              key: widget
+              label: "小工具"
+              options:
+                - value: "profile"
+                  label: 个人卡片
+                - value: "profile"
+                  label: 最新文章
+                - value: "comments"
+                  label: 最新评论
+                - value: "tags"
+                  label: 标签云
+                - value: "websitestat"
+                  label: 网站统计
+                - value: "custom_html"
+                  label: 自定义
+            - $formkit: group
+              name: custom_html
+              if: $value.widget == 'custom_html'
+              key: custom_html
+              label: 自定义内容
+              children:
+                - $formkit: text
+                  name: title
+                  label: 标题
+                - $formkit: code
+                  name: html
+                  label: 内容
+                  height: 200px
+                  help: 支持html语法
+                  language: html
+        - $formkit: repeater
+          name: postWidget
+          id: postWidget
+          label: 文章页
+          help: post 可以支持设置 toc
+          value: 
+            - widget: "profile"
+            - widget: "comments"
+            - widget: "tags"
+            - widget: "websitestat"
+          children:
+            - $formkit: select
+              name: widget
+              id: widget
+              key: widget
+              label: "小工具"
+              options:
+                - value: "profile"
+                  label: 个人卡片
+                - value: "profile"
+                  label: 最新文章
+                - value: "comments"
+                  label: 最新评论
+                - value: "tags"
+                  label: 标签云
+                - value: "websitestat"
+                  label: 网站统计
+                - value: "custom_html"
+                  label: 自定义
+            - $formkit: group
+              name: custom_html
+              if: $value.widget == 'custom_html'
+              key: custom_html
+              label: 自定义内容
+              children:
+                - $formkit: text
+                  name: title
+                  label: 标题
+                - $formkit: code
+                  name: html
+                  label: 内容
+                  height: 200px
+                  help: 支持html语法
+                  language: html
+        - $formkit: repeater
+          name: tagWidget
+          id: tagWidget
+          label: 标签页
+          value: 
+            - widget: "profile"
+            - widget: "comments"
+            - widget: "tags"
+            - widget: "websitestat"
+          children:
+            - $formkit: select
+              name: widget
+              id: widget
+              key: widget
+              label: "小工具"
+              options:
+                - value: "profile"
+                  label: 个人卡片
+                - value: "profile"
+                  label: 最新文章
+                - value: "comments"
+                  label: 最新评论
+                - value: "tags"
+                  label: 标签云
+                - value: "websitestat"
+                  label: 网站统计
+                - value: "custom_html"
+                  label: 自定义
+            - $formkit: group
+              name: custom_html
+              if: $value.widget == 'custom_html'
+              key: custom_html
+              label: 自定义内容
+              children:
+                - $formkit: text
+                  name: title
+                  label: 标题
+                - $formkit: code
+                  name: html
+                  label: 内容
+                  height: 200px
+                  help: 支持html语法
+                  language: html
+        - $formkit: repeater
+          id: categoryWidget
+          name: categoryWidget
+          label: 分类页
+          value: 
+            - widget: "profile"
+            - widget: "comments"
+            - widget: "tags"
+            - widget: "websitestat"
+          children:
+            - $formkit: select
+              name: widget
+              id: widget
+              key: widget
+              label: "小工具"
+              options:
+                - value: "profile"
+                  label: 个人卡片
+                - value: "profile"
+                  label: 最新文章
+                - value: "comments"
+                  label: 最新评论
+                - value: "tags"
+                  label: 标签云
+                - value: "websitestat"
+                  label: 网站统计
+                - value: "custom_html"
+                  label: 自定义
+            - $formkit: group
+              name: custom_html
+              if: $value.widget == 'custom_html'
+              key: custom_html
+              label: 自定义内容
+              children:
+                - $formkit: text
+                  name: title
+                  label: 标题
+                - $formkit: code
+                  name: html
+                  label: 内容
+                  height: 200px
+                  help: 支持html语法
+                  language: html
+        - $formkit: repeater
+          name: pageWidget
+          id: pageWidget
+          label: 自定义页
+          help: 自定义页面默认没有侧栏
+          value: 
+            - widget: "profile"
+            - widget: "comments"
+            - widget: "tags"
+            - widget: "websitestat"
+          children:
+            - $formkit: select
+              name: widget
+              id: widget
+              key: widget
+              label: "小工具"
+              options:
+                - value: "profile"
+                  label: 个人卡片
+                - value: "profile"
+                  label: 最新文章
+                - value: "comments"
+                  label: 最新评论
+                - value: "tags"
+                  label: 标签云
+                - value: "websitestat"
+                  label: 网站统计
+                - value: "custom_html"
+                  label: 自定义
+            - $formkit: group
+              name: custom_html
+              if: $value.widget == 'custom_html'
+              key: custom_html
+              label: 自定义内容
+              children:
+                - $formkit: text
+                  name: title
+                  label: 标题
+                - $formkit: code
+                  name: html
+                  label: 内容
+                  height: 200px
+                  help: 支持html语法
+                  language: html
+        - $formkit: group
+          name: profile
+          label: 个人卡片
+          value:
+            logo: ""
+            name: "困困鱼"
+            game: "Blogger/摄影爱好者/数码发烧友"
+            desc: "喜欢捣鼓的博主"
+            socialMedia:
+              - svg: <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M12,2C6.477,2,2,6.477,2,12c0,4.419,2.865,8.166,6.839,9.489c0.5,0.09,0.682-0.218,0.682-0.484 c0-0.236-0.009-0.866-0.014-1.699c-2.782,0.602-3.369-1.34-3.369-1.34c-0.455-1.157-1.11-1.465-1.11-1.465 c-0.909-0.62,0.069-0.608,0.069-0.608c1.004,0.071,1.532,1.03,1.532,1.03c0.891,1.529,2.341,1.089,2.91,0.833 c0.091-0.647,0.349-1.086,0.635-1.337c-2.22-0.251-4.555-1.111-4.555-4.943c0-1.091,0.39-1.984,1.03-2.682 C6.546,8.54,6.202,7.524,6.746,6.148c0,0,0.84-0.269,2.75,1.025C10.295,6.95,11.15,6.84,12,6.836 c0.85,0.004,1.705,0.114,2.504,0.336c1.909-1.294,2.748-1.025,2.748-1.025c0.546,1.376,0.202,2.394,0.1,2.646 c0.64,0.699,1.026,1.591,1.026,2.682c0,3.841-2.337,4.687-4.565,4.935c0.359,0.307,0.679,0.917,0.679,1.852 c0,1.335-0.012,2.415-0.012,2.741c0,0.269,0.18,0.579,0.688,0.481C19.138,20.161,22,16.416,22,12C22,6.477,17.523,2,12,2z"></path></svg>
+                name: "Twenty Twelve"
+                url: "https://github.com/chengzhongxue/halo-theme-twentytwelve"
+          children:
+            - $formkit: attachment
+              name: logo
+              label: 头像
+            - $formkit: text
+              name: name
+              label: 名称
+            - $formkit: text
+              name: game
+              label: 爱好
+            - $formkit: text
+              name: desc
+              label: 描述
+            - $formkit: repeater
+              name: socialMedia
+              label: 社交媒体
+              children:
+                - $formkit: textarea
+                  name: svg
+                  label: 图标
+                  help: 使用 svg
+                - $formkit: text
+                  name: name
+                  label: 名称
+                - $formkit: url
+                  name: url
+                  label: 链接
+                

@@ -1,0 +1,23 @@
+<aside class="widget" th:with="comments = ${commentFinder.list(null, 1, 4)}"
+    th:if=" ${not #lists.isEmpty(comments.items)}">
+    <h3 class="widget-title">Recent Comments</h3>
+    <ul id="recentcomments">
+        <th:block th:each="comment,iterStat : ${comments.items}">
+            <li th:with="page = ${comment.spec.subjectRef.kind == 'Post' ? postFinder.getByName(comment.spec.subjectRef.name) :
+            comment.spec.subjectRef.kind == 'SinglePage' && not #strings.contains('photos,links,moments', comment.spec.subjectRef.name) ? singlePageFinder.getByName(comment.spec.subjectRef.name) : null},
+            url = ${page == null? '/' : page.status.permalink + '#comments'},
+            article = ${page == null? '该文章/页面不存在' : page.spec.title}" class="recentcomments">
+                <span class="comment-author-link" th:with="website = ${comment.spec.owner.annotations.website}">
+                    <a th:unless="${#strings.isEmpty(website)}" th:href="${website}" class="url"
+                        rel="ugc external nofollow" th:text="${comment.spec.owner.displayName}"></a>
+                    <th:block th:if="${#strings.isEmpty(website)}">
+                        [[${comment.owner.displayName}]]
+                    </th:block>
+
+                </span> on <a th:href="${url}">[[${article}]]</a>
+            </li>
+        </th:block>
+
+    </ul>
+    <div class="clear"></div>
+</aside>

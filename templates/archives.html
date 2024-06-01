@@ -1,26 +1,87 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{layout :: html(head = null,content = ~{::content})}"
->
-  <th:block th:fragment="content">
-    <th:block th:each="archive : ${archives.items}">
-      <h1 th:text="${archive.year}"></h1>
-      <ul class="listing">
-        <th:block th:each="month : ${archive.months}">
-          <li th:each="post : ${month.posts}">
-            <a
-              th:href="@{${post.status.permalink}}"
-              th:title="${post.spec.title}"
-              th:text="${post.spec.title}"
-            ></a>
-          </li>
-        </th:block>
-      </ul>
-    </th:block>
-    <a th:if="${archives.hasPrevious()}" th:href="@{${archives.prevUrl}}">
-      上一页
-    </a>
-    <a th:if="${archives.hasNext()}" th:href="@{${archives.nextUrl}}">下一页</a>
-  </th:block>
+<html xmlns:th="https://www.thymeleaf.org"
+    th:replace="~{modules/layout :: layout(_content = ~{::content},_title = '所有文章')}">
+<th:block th:fragment="content">
+    <div id="primary" class="site-content">
+        <div class="breadcrumb">
+            <ul id="breadcrumb" class="breadcrumb">
+                <li class="item"><a href="/">⚐ Home</a></li>
+                <li class="seperator"> / </li>
+                <li class="item-current item">所有文章</li>
+            </ul>
+        </div>
+        <div id="content" class="site-main template-archives" role="main">
+            <article>
+                <header class="entry-header">
+                    <h1 class="entry-title">所有文章</h1>
+                </header>
+                <div class="archives-meta" th:with="stats = ${siteStatsFinder.getStats()}">
+                    站点统计：[[${stats.post}]] 篇文章、[[${stats.category}]] 个分类、[[${tagFinder.list(1,1).total}]]
+                    个标签、[[${stats.comment}]] 条留言、[[${stats.visit}]] 次访问 </div>
+                <div class="clear"></div>
+                <div id="archives" class="link_clr">
+                    <p><a id="al_expand_collapse" href="#">全部展开/收缩</a> <em>(注: 点击月份可以展开)</em></p>
+                    <th:block th:each="archive : ${archives.items}">
+                        <h3 class="al_year">[[${archive.year}]] 年 </h3>
+                        <ul class="al_mon_list">
+                            <li  th:each="month : ${archive.months}">
+                                <span class="al_mon" style="cursor: s-resize;">[[${month.month}]] 月 <em>( [[${month.posts.size}]] 篇文章 )</em></span>
+                                <ul class="al_post_list">
+                                    <li th:each="post : ${month.posts}">
+                                        [[${#dates.format(post.spec.publishTime,'dd')}]]日: <a th:href="@{${post.status.permalink}}" target="_blank" th:text="${post.spec.title}"></a> 
+                                        <em>（留言&nbsp;[[${post.stats.comment}]]、浏览&nbsp;[[${post.stats.visit}]]&nbsp;）</em>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </th:block>
+                </div>
+                <div class="clear"></div>
+                <footer class="entry-meta-single">
+                </footer>
+            </article>
+        </div>
+    </div>
+    <th:block th:replace="~{modules/sidebar :: sidebar (${theme.config.sidebar.pageWidget})}"></th:block>
+    <script type="text/javascript">
+        (function ($, window) {
+            $(function() {
+                var $a = $('#archives'),
+                    $m = $('.al_mon', $a),
+                    $l = $('.al_post_list', $a),
+                    $l_f = $('.al_post_list:first', $a);
+                //$l.hide();
+                //$l_f.show();
+                $m.css('cursor', 's-resize').on('click', function(){
+                    $(this).next().slideToggle("fast");
+                });
+                var animate = function(index, status, s) {
+                    if (index > $l.length) {
+                        return;
+                    }
+                    if (status == 'up') {
+                        $l.eq(index).slideUp(s, function() {
+                            animate(index+1, status, (s-10<1)?0:s-10);
+                        });
+                    } else {
+                        $l.eq(index).slideDown(s, function() {
+                            animate(index+1, status, (s-10<1)?0:s-10);
+                        });
+                    }
+                };
+                $('#al_expand_collapse').on('click', function(e){
+                    e.preventDefault();
+                    if ( $(this).data('s') ) {
+                        $(this).data('s', '');
+                        animate(0, 'down', 10);//10 改 100 展开收缩速度更慢
+                    } else {
+                        $(this).data('s', 1);
+                        animate(0, 'up', 10);
+                    }
+                });
+            });
+        })(jQuery, window);
+    </script>
+</th:block>
+
 </html>

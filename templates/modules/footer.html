@@ -1,0 +1,15 @@
+<footer id="colophon" role="contentinfo">
+    <div class="site-info">
+        <th:block th:if="${not #strings.isEmpty(theme.config.basic.footerinfo_first)}" th:utext="${theme.config.basic.footerinfo_first}"> </th:block>
+        <p>版权所有 &copy; <th:block th:if="${#strings.isEmpty(theme.config.basic.copyright)}">([[${#dates.format(new java.util.Date(), 'yyyy')}]])</th:block>
+            <th:block th:if="${not #strings.isEmpty(theme.config.basic.copyright)}">
+                    ([[${#strings.equals(theme.config.basic.copyright, #dates.format(new java.util.Date(), 'yyyy')) ? theme.config.basic.copyright : theme.config.basic.copyright+' - ' +  #dates.format(new java.util.Date(), 'yyyy')}]])
+           </th:block>
+            <a href="/" th:text="${site.title}"></a>│<a
+                href="/sitemap.xml">网站地图</a><br>程序：<a
+                href="https://www.halo.run">Halo </a>│主题：<a
+                href="https://github.com/chengzhongxue/halo-theme-twentytwelve">Twenty Twelve</a>
+        </p>
+    </div>
+    <div class="footerinfo" th:if="${not #strings.isEmpty(theme.config.basic.footerinfo)}" th:utext="${theme.config.basic.footerinfo}"></div>
+</footer>

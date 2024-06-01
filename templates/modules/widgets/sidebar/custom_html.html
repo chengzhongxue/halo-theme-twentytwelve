@@ -1,0 +1,5 @@
+<aside class="widget" th:fragment="custom_html(widget_data)">
+    <h3 class="widget-title" th:text="${widget_data.custom_html.title}"></h3>
+    <th:block th:utext="${widget_data.custom_html.html}"></th:block>
+    <div class="clear"></div>
+</aside>

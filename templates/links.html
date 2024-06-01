@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+    th:replace="~{modules/layout :: layout(_content = ~{::content},_title = '友情链接')}">
+<th:block th:fragment="content">
+    <div id="primary" class="site-content">
+        <div class="breadcrumb">
+            <ul id="breadcrumb" class="breadcrumb">
+                <li class="item"><a href="/">⚐ Home</a></li>
+                <li class="seperator"> / </li>
+                <li class="item-current item">友情链接</li>
+            </ul>
+        </div>
+        <div id="content" class="site-main template-links" role="main">
+            <article>
+                <header class="entry-header">
+                    <h1 class="entry-title">友情链接</h1>
+                </header>
+                <div class="entry-content">
+                    <div class="single-content link_clr">
+                        <div>
+                            <th:block th:each="group,iterStat : ${groups}">
+                                <ul class="link-content clearfix">
+                                    <li th:each="link : ${group.links}">
+                                        <a th:href="${link.spec.url}" th:title="${link.spec.description}"
+                                            target="_blank">
+                                            <img alt="" th:src="${link.spec.logo}"
+                                                class="avatar avatar-64 photo avatar-default" height="64" width="64"
+                                                decoding="async"><span class="sitename"
+                                                th:text="${link.spec.displayName}"></span></a>
+                                    </li>
+                                </ul>
+                            </th:block>
+
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </article>
+
+        </div>
+    </div>
+    <th:block th:replace="~{modules/sidebar :: sidebar (${theme.config.sidebar.pageWidget})}"></th:block>
+</th:block>
+
+</html>

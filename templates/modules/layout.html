@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" th:fragment="layout(_content,_title)"
+  th:with="site_title = ${not #strings.isEmpty(_title) ?  _title+' - '+site.title  :  #strings.isEmpty(site.subtitle) ? site.title :  site.title +' - ' +site.subtitle }">
+
+<head th:replace="~{modules/head}"></head>
+
+<body>
+  <style>
+    :root {
+      --halo-comment-widget-base-font-size: 1.55rem;
+      /* 搜索 */
+      --halo-search-widget-base-font-size: 1.55rem;
+    }
+  </style>
+  <div id="page" class="hfeed site">
+    <th:block th:replace="~{modules/header}" />
+    <div id="main" class="wrapper">
+      <th:block th:replace="${_content}" />
+    </div>
+    <th:block th:replace="~{modules/footer}" />
+    <th:block th:replace="~{modules/scroll}" />
+    <script>
+      var clipboardatext = new ClipboardJS('.clipboard');
+      clipboardatext.on('success', function (e) {
+        e.clearSelection();
+      });
+    </script>
+  </div>
+  <script type="text/javascript" th:src="@{/assets/js/navigation.js?v={version}(version=${theme.spec.version})}"
+    id="twentytwelve-navigation-js"></script>
+  <script type="text/javascript" th:src="@{/assets/js/script.js?v={version}(version=${theme.spec.version})}"
+    id="script-js"></script>
+  <script type="text/javascript" th:src="@{/assets/js/clipboard.min.js?v={version}(version=${theme.spec.version})}"
+    id="clipboard-js"></script>
+</body>

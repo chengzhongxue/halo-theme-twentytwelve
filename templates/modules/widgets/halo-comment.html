@@ -1,0 +1,9 @@
+<th:block th:fragment="halo-comment(name,kind,group)">
+
+    <th:block th:if="${haloCommentEnabled}">
+        <halo:comment th:attr="name=${name},kind=${kind},group=${group}" />
+    </th:block>
+    <th:block th:unless="${haloCommentEnabled}">
+        <p class="no-comments">评论已关闭！</p>
+    </th:block>
+</th:block>

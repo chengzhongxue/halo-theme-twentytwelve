@@ -1,19 +1,24 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{layout :: html(head = null,content = ~{::content})}"
->
-  <th:block th:fragment="content">
-    <h1 th:text="${tag.spec.displayName}"></h1>
-    <ul>
-      <li th:each="post : ${posts.items}">
-        <a
-          th:href="@{${post.status.permalink}}"
-          th:text="${post.spec.title}"
-        ></a>
-      </li>
-    </ul>
-    <a th:if="${posts.hasPrevious()}" th:href="@{${posts.prevUrl}}">上一页</a>
-    <a th:if="${posts.hasNext()}" th:href="@{${posts.nextUrl}}">下一页</a>
-  </th:block>
+<html xmlns:th="https://www.thymeleaf.org"
+    th:replace="~{modules/layout :: layout(_content = ~{::content},_title = ${'标签归档: '+tag.spec.displayName})}">
+<th:block th:fragment="content">
+    <section id="primary" class="site-content">
+        <div class="breadcrumb">
+            <ul id="breadcrumb" class="breadcrumb">
+                <li class="item"><a href="/">⚐ Home</a></li>
+                <li class="seperator"> / </li>
+                <li class="item item-current" th:text="${tag.spec.displayName}"></li>
+            </ul>
+        </div>
+        <div id="content" role="main">
+            <header class="archive-header">
+                <h1 class="taxonomy-title">标签：[[${tag.spec.displayName}]] 相关文章</h1>
+            </header>
+            <th:block th:replace="~{modules/content}" />
+        </div>
+        <th:block th:replace="~{modules/widgets/pagination :: pagination(${tag.status.permalink},${posts})}"></th:block>
+    </section>
+    <th:block th:replace="~{modules/sidebar :: sidebar (${theme.config.sidebar.tagWidget})}"></th:block>
+</th:block>
+
 </html>

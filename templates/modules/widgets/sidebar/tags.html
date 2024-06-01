@@ -1,0 +1,9 @@
+<aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="tagcloud" th:with="tags = ${tagFinder.listAll()}">
+        <a th:each="tag,iterStat : ${tags}"
+        target="_blank" th:href="@{${tag.status.permalink}}" class="tag-cloud-link"
+            style="font-size: 6pt;" th:text="${tag.spec.displayName}"></a>
+    </div>
+    <div class="clear"></div>
+</aside>

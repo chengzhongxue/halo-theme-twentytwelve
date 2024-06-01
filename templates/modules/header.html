@@ -1,0 +1,30 @@
+<header id="masthead" class="site-header">
+    <hgroup><a href="/" title="回到首页">
+            <img th:src="${site.logo}" th:alt="${site.title}" width="70" height="70" /></a>
+        <h1 class="site-title">
+            <a href="/" th:title="${site.title}" rel="home" th:text="${site.title}"></a>
+        </h1>
+        <h2 class="site-description">[[${site.subtitle}]]<span class="logo__cursor"></span></h2>
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation">
+        <button class="menu-toggle" th:with="topMenu = ${menuFinder.getPrimary()}">Menu</button>
+        <a class="assistive-text" href="#content" title="Skip to content">Skip to content</a>
+        <div th:with="topMenu = ${menuFinder.getPrimary()}">
+            <ul class="nav-menu">
+                <th:block th:each="menuItem,iterStat : ${topMenu.menuItems}">
+                    <li class="menu-item">
+                        <a th:href="@{${menuItem.status.href}}" th:text="${menuItem.status.displayName}"
+                            th:target="${menuItem.spec.target?.value}"></a>
+                        <ul class="sub-menu" th:if="${not #lists.isEmpty(menuItem.children)}">
+                            <li class="menu-item" th:each="childMenu,iterStat : ${menuItem.children}">
+                                <a th:href="@{${childMenu.status.href}}" th:target="${childMenu.spec.target?.value}"
+                                    th:text="${childMenu.status.displayName}"></a>
+                            </li>
+                        </ul>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
+    </nav>
+</header>

@@ -1,0 +1,24 @@
+<aside class="widget widget_block">
+    <div>
+        <div class="is-style-rounded">
+            <figure class="aligncenter size-large is-resized">
+                <img decoding="async" th:src="${theme.config.sidebar.profile.logo}" alt=""
+                    style="aspect-ratio:1;object-fit:cover;width:86px;height:auto">
+            </figure>
+        </div>
+        <h2 class="wp-block-heading has-text-align-center has-medium-font-size"
+            th:text="${theme.config.sidebar.profile.name}"></h2>
+        <p class="has-text-align-center" style="font-size:15px" th:text="${theme.config.sidebar.profile.game}"></p>
+        <p class="has-text-align-center has-small-font-size" th:text="${theme.config.sidebar.profile.desc}"></p>
+        <ul class=".block-social-links aligncenter is-layout-flex">
+            <li class="social-link" th:each="socialMedia : ${theme.config.sidebar.profile.socialMedia}">
+                <a rel="noopener nofollow" target="_blank" th:href="${socialMedia.url}"
+                    class="wp-block-social-link-anchor">
+                    <th:block th:utext="${socialMedia.svg}"></th:block>
+                    <span class="screen-reader-text" th:text="${socialMedia.name}"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</aside>

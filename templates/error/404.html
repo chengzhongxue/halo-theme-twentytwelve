@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+    th:replace="~{modules/layout :: layout(_content = ~{::content},_title = '404')}">
+<th:block th:fragment="content">
+    <div id="primary" class="site-content">
+        <div id="content" role="main">
+            <article class="post error404 no-results not-found">
+                <header class="entry-header">
+                    <h1 class="entry-title">什么都没有</h1>
+                </header>
+
+                <div class="entry-content">
+                    <p>看起来在这个位置找不到任何东西，您可以尝试搜索功能。</p>
+                    <div id="searchbar">
+                        <p><a href="/">返回首页</a></p>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</th:block>
+
+</html>

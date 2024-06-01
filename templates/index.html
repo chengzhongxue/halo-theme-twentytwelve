@@ -1,18 +1,73 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{layout :: html(head = null,content = ~{::content})}"
->
-  <th:block th:fragment="content">
-    <ul>
-      <li th:each="post : ${posts.items}">
-        <a
-          th:href="@{${post.status.permalink}}"
-          th:text="${post.spec.title}"
-        ></a>
-      </li>
-    </ul>
-    <a th:if="${posts.hasPrevious()}" th:href="@{${posts.prevUrl}}">上一页</a>
-    <a th:if="${posts.hasNext()}" th:href="@{${posts.nextUrl}}">下一页</a>
-  </th:block>
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{modules/layout :: layout(_content = ~{::content},_title = null)}">
+<th:block th:fragment="content">
+  <div id="primary" class="site-content">
+    <div id="content" role="main">
+      <article th:each="post,iter : ${posts.items}" itemscope itemtype="http://schema.org/Article" class="post">
+        <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+          <meta itemprop="name" th:content="${site.title}">
+          <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+            <meta itemprop="url" th:content="${site.logo}">
+            <meta itemprop="width" content="112px">
+            <meta itemprop="height" content="112px">
+          </div>
+        </div>
+        <meta itemprop="mainEntityOfPage" th:content="@{${post.status.permalink}}">
+        <meta itemprop="dateModified" th:content="${post.spec.publishTime.toEpochMilli()}">
+        <header class="entry-header">
+          <h1 class="entry-title">
+            <a th:href="@{${post.status.permalink}}" rel="bookmark" th:text="${post.spec.title}"></a>
+          </h1>
+          <div class="single-meta-info gray" th:with="days=${(new java.util.Date().getTime()-post.spec.publishTime.toEpochMilli())/86400000}">
+            <th:block th:if="${post.spec.pinned}">
+              <span class="newsnticky">置顶</span>
+              <span class="dot"></span>
+            </th:block>
+            <th:block  th:if="${days<3}">
+                <span class="newsnticky">新</span>
+                <span class="dot"></span>
+            </th:block>
+            <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+              <meta itemprop="url" th:content="${post.owner.permalink}">
+            </span>
+            <span class="comment anchor-fix">
+              <a th:href="${post.status.permalink}+'#comments'" rel="nofollow">
+                <meta itemprop="interactionCount" th:content="'UserComments:'+${post.stats.comment}">
+                [[${post.stats.comment}]]条评论
+              </a></span>
+          </div>
+        </header>
+        <div class="entry-summary">
+          <p>[[${post.spec.excerpt.raw}]]<span class="read-more"> <a th:href="@{${post.status.permalink}}"></a></span>
+          </p><a th:href="@{${post.status.permalink}}">
+          </a>
+          <p><a th:href="@{${post.status.permalink}}">继续阅读»»»</a></p>
+        </div>
+
+        <footer class="home-foot">
+          ◷[[${#dates.format(post.spec.publishTime,'yyyy/MM/dd')}]]&nbsp;&nbsp;
+          @[[${post.owner.displayName}]]&nbsp;&nbsp;
+          <th:block th:if="${not #lists.isEmpty(post.categories)}">
+            ▤<th:block th:each="category,iter : ${post.categories}">
+              <a th:href="@{${category.status.permalink}}" rel="category tag"
+                th:text="${category.spec.displayName}"></a>
+              <th:block th:if="${iter.index>0 && iter.count<post.categories.size}">、</th:block>
+            </th:block>
+            &nbsp;&nbsp;
+          </th:block>
+          <th:block th:if="${not #lists.isEmpty(post.tags)}">
+            ⚑<th:block th:each="tag,iter : ${post.tags}">
+              <a th:href="@{${tag.status.permalink}}" target="_blank" rel="tag" th:text="${tag.spec.displayName}"></a>
+              <th:block th:if="${iter.index>0 && iter.count<post.tags.size}">、</th:block>
+            </th:block>
+          </th:block>
+        </footer>
+      </article>
+    </div>
+    <th:block th:replace="~{modules/widgets/pagination :: pagination('',${posts})}"></th:block>
+  </div>
+  <th:block th:replace="~{modules/sidebar :: sidebar (${theme.config.sidebar.indexWidget})}"></th:block>
+</th:block>
+
 </html>
