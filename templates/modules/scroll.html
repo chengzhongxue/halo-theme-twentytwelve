@@ -1,4 +1,7 @@
 <ul id="scroll">
+    <li th:if="${pluginFinder.available('PluginSearchWidget')}">
+        <a class="scroll-t" title="站内搜索" href="javascript:SearchWidget.open();"><i class="icon-search"></i></a>
+    </li>
     <li><a class="scroll-t" title="返回顶部"><i class="icon-up-big"></i></a></li>
     <li><a class="scroll-b" title="转到底部"><i class="icon-down-big"></i></a></li>
     <li class="log log-no"><a class="log-button" title="文章目录"><i class="icon-th-list"></i></a>

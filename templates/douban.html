@@ -4,6 +4,12 @@
 <th:block th:fragment="content">
     <link rel="stylesheet" id="wpd-css-css" th:href="@{/plugins/plugin-douban/assets/static/db.min.css}" type="text/css"
           media="screen">
+    <style>
+        .dark .db--container {
+            --db--text-color: #A6A6A6;
+            --db--text-color-light: #A6A6A6;
+        }
+    </style>
     <div id="primary" class="site-content">
         <div class="breadcrumb">
             <ul id="breadcrumb" class="breadcrumb">
