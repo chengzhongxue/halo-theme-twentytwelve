@@ -2,6 +2,8 @@ apiVersion: theme.halo.run/v1alpha1
 kind: Theme
 metadata:
   name: theme-twentytwelve
+  annotations:
+    "store.halo.run/app-id": "app-TbQVd"
 spec:
   displayName: Twenty Twelve
   author:
@@ -14,8 +16,8 @@ spec:
   issues: "https://github.com/chengzhongxue/halo-theme-twentytwelve/issues"
   settingName: "theme-twentytwelve-setting"
   configMapName: "theme-twentytwelve-configMap"
-  version: "1.0.0"
-  requires: ">=2.15.0"
+  version: "1.0.1"
+  requires: ">=2.19.0"
   license:
     - name: "GPL-2.0 license"
       url: "https://github.com/chengzhongxue/halo-theme-twentytwelve?tab=GPL-2.0-1-ov-file#readme"

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{modules/layout :: layout(_content = ~{::content},_title = ${title})}">
+<th:block th:fragment="content">
+    <link rel="stylesheet" id="wpd-css-css" th:href="@{/plugins/plugin-douban/assets/static/db.min.css}" type="text/css"
+          media="screen">
+    <div id="primary" class="site-content">
+        <div class="breadcrumb">
+            <ul id="breadcrumb" class="breadcrumb">
+                <li class="item"><a href="/">⚐ Home</a></li>
+                <li class="seperator"> / </li>
+                <li class="item-current item" th:text="${title}"></li>
+            </ul>
+        </div>
+        <div id="content" role="main">
+            <article class="page type-page">
+                <header class="entry-header">
+                    <h1 class="entry-title" th:text="${title}"></h1>
+                </header>
+                <div class="entry-content">
+                    <section class="db--container">
+                        <nav class="db--nav">
+                            <div th:each="type : ${types}" class="db--navItem JiEun"
+                                 th:classappend="${type.key == 'movie' ? 'current' : ''}"
+                                 th:data-type="${type.key}" th:text="${type.key}"></div>
+                        </nav>
+                        <div class="db--genres"></div>
+                        <div class="db--type">
+                            <div class="db--typeItem" data-status="mark">想看</div>
+                            <div class="db--typeItem" data-status="doing">在看</div>
+                            <div class="db--typeItem is-active" data-status="done">看过</div>
+                        </div>
+                        <div class="db--list db--list__card" data-type="movie">
+
+                        </div>
+                        <div class="block-more block-more__centered">
+                            <div class="lds-ripple u-hide">
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+            </article>
+        </div>
+    </div>
+    <th:block th:replace="~{modules/sidebar :: sidebar (${theme.config.sidebar.pageWidget})}"></th:block>
+    <script th:src="@{/plugins/plugin-douban/assets/static/db.min.js}"></script>
+</th:block>
+
+</html>

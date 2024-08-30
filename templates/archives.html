@@ -21,7 +21,7 @@
                 <div class="clear"></div>
                 <div id="archives" class="link_clr">
                     <p><a id="al_expand_collapse" href="#">全部展开/收缩</a> <em>(注: 点击月份可以展开)</em></p>
-                    <th:block th:each="archive : ${archives.items}">
+                    <th:block th:each="archive : ${postFinder.archives(1, 0).items}">
                         <h3 class="al_year">[[${archive.year}]] 年 </h3>
                         <ul class="al_mon_list">
                             <li  th:each="month : ${archive.months}">

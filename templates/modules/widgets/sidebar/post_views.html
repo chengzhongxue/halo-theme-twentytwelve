@@ -1,0 +1,11 @@
+<aside class="widget widget_most_views" th:with="posts = ${postFinder.list({page: 1, size: 8, sort: {'stats.visit,desc'}})}"
+       th:if=" ${not #lists.isEmpty(posts.items)}">
+    <h3 class="widget-title">浏览最多</h3>
+    <ul>
+        <li th:each="post : ${posts.items}">
+            <a th:href="${post.status.permalink}"
+               th:title="|${post.spec.title} - ${post.stats.visit}|" th:text="${post.spec.title}"></a>
+        </li>
+    </ul>
+    <div class="clear"></div>
+</aside>
