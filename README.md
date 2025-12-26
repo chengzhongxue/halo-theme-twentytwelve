@@ -30,6 +30,8 @@ Twenty Twelve 主题支持以下 Halo 插件：
 - [x] [文章搜索](https://github.com/halo-sigs/plugin-search-widget)（插件）
 - [X] [评论系统](https://github.com/halo-sigs/plugin-comment-widget)（插件）
 - [x] [友情链接](https://github.com/halo-sigs/plugin-links)（插件）
+- [x] [豆瓣](https://github.com/chengzhongxue/plugin-douban)
+- [x] [装备管理](https://github.com/chengzhongxue/plugin-equipment)
 - [x] 其他功能
 
 ### TODO
@@ -59,6 +61,7 @@ Twenty Twelve 主题支持以下 Halo 插件：
 
 如果你对主题有什么建议或者意见，欢迎提 PR & issue。
 
+添加企业微信 （备注什么主题）
 <img width="360" src="https://api.minio.yyds.pink/halo-docs/2024/04/hao-2.jpg" />
 
 

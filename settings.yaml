@@ -7,7 +7,7 @@ spec:
     - group: basic
       label: 基础设置
       formSchema:
-        - $formkit: checkbox
+        - $formkit: switch
           name: darkmode
           id: darkmode
           label: 开启夜间模式
@@ -65,10 +65,13 @@ spec:
     - group: sidebar
       label: 侧栏
       formSchema:
-        - $formkit: repeater
+        - $formkit: array
           name: indexWidget
           id: indexWidget
           label: 首页
+          itemLabels:
+            - type: text
+              label: $value.widget
           value: 
             - widget: "profile"
             - widget: "comments"
@@ -113,6 +116,9 @@ spec:
           id: postWidget
           label: 文章页
           help: post 可以支持设置 toc
+          itemLabels:
+            - type: text
+              label: $value.array
           value: 
             - widget: "profile"
             - widget: "comments"
@@ -152,10 +158,13 @@ spec:
                   height: 200px
                   help: 支持html语法
                   language: html
-        - $formkit: repeater
+        - $formkit: array
           name: tagWidget
           id: tagWidget
           label: 标签页
+          itemLabels:
+            - type: text
+              label: $value.widget
           value: 
             - widget: "profile"
             - widget: "comments"
@@ -195,11 +204,14 @@ spec:
                   height: 200px
                   help: 支持html语法
                   language: html
-        - $formkit: repeater
+        - $formkit: array
           id: categoryWidget
           name: categoryWidget
           label: 分类页
-          value: 
+          itemLabels:
+            - type: text
+              label: $value.widget
+          value:
             - widget: "profile"
             - widget: "comments"
             - widget: "tags"
@@ -238,11 +250,14 @@ spec:
                   height: 200px
                   help: 支持html语法
                   language: html
-        - $formkit: repeater
+        - $formkit: array
           name: pageWidget
           id: pageWidget
           label: 自定义页
           help: 自定义页面默认没有侧栏
+          itemLabels:
+            - type: text
+              label: $value.widget
           value: 
             - widget: "profile"
             - widget: "comments"
@@ -307,9 +322,14 @@ spec:
             - $formkit: text
               name: desc
               label: 描述
-            - $formkit: repeater
+            - $formkit: array
               name: socialMedia
               label: 社交媒体
+              itemLabels:
+                - type: text
+                  label: $value.name
+                - type: text
+                  label: $value.url
               children:
                 - $formkit: textarea
                   name: svg

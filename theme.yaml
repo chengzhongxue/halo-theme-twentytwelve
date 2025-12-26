@@ -16,8 +16,8 @@ spec:
   issues: "https://github.com/chengzhongxue/halo-theme-twentytwelve/issues"
   settingName: "theme-twentytwelve-setting"
   configMapName: "theme-twentytwelve-configMap"
-  version: "1.0.1"
-  requires: ">=2.19.0"
+  version: "1.1.0"
+  requires: ">=2.22.1"
   license:
     - name: "GPL-2.0 license"
       url: "https://github.com/chengzhongxue/halo-theme-twentytwelve?tab=GPL-2.0-1-ov-file#readme"

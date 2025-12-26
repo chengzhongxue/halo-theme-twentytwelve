@@ -52,14 +52,14 @@
             ▤<th:block th:each="category,iter : ${post.categories}">
               <a th:href="@{${category.status.permalink}}" rel="category tag"
                 th:text="${category.spec.displayName}"></a>
-              <th:block th:if="${iter.index>0 && iter.count<post.categories.size}">、</th:block>
+              <th:block th:if="${iter.index>0 && iter.count<post.categories.size()}">、</th:block>
             </th:block>
             &nbsp;&nbsp;
           </th:block>
           <th:block th:if="${not #lists.isEmpty(post.tags)}">
             ⚑<th:block th:each="tag,iter : ${post.tags}">
               <a th:href="@{${tag.status.permalink}}" target="_blank" rel="tag" th:text="${tag.spec.displayName}"></a>
-              <th:block th:if="${iter.index>0 && iter.count<post.tags.size}">、</th:block>
+              <th:block th:if="${iter.index>0 && iter.count<post.tags.size()}">、</th:block>
             </th:block>
           </th:block>
         </footer>
